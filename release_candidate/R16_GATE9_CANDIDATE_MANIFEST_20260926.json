@@ -1,0 +1,45 @@
+{
+  "project": "PCR3BP_G459_ACTIVE_PROJECT_20260917",
+  "branch": "R16_CMDA_SUBMISSION_REBUILD_20260925",
+  "date": "2026-09-26",
+  "scientific_state": "G459 all-subcritical mathematics 100% CLOSED_PROJECT_LEVEL",
+  "candidate_manuscript": {
+    "tex": "G459_ALL_SUBCRITICAL_R16_GATE9_CANDIDATE_20260926.tex",
+    "tex_sha256": "e31738ad6840d747604a7c96039a3e7a6b4e3001827eb56e04dc36b2278c15e1",
+    "pdf": "G459_ALL_SUBCRITICAL_R16_GATE9_CANDIDATE_20260926.pdf",
+    "pdf_sha256": "78dbd88d154b618c7cd6d12a3af2b315a1212055774cb4720dbf51722d48ba8d",
+    "pages": 8,
+    "paper_size": "A4",
+    "persistent_latex_build": "PASS_NO_FINAL_WARNINGS",
+    "visual_render_qa": "PASS_8_OF_8"
+  },
+  "manuscript_hardening": [
+    "exact parameter/convention table inserted",
+    "N2 occupation-budget derivation expanded",
+    "N3/N4/N5 finite-return and long-regime argument expanded",
+    "publication proof-to-evidence table inserted",
+    "frozen theorem-number citations inserted where authorized"
+  ],
+  "quick_audit": {
+    "bundle": "R16_QUICK_AUDIT_WORKING_V2_20260926.zip",
+    "bundle_sha256": "ecf824ab4e8926d76c9e390b35ef3bd542d66ca709e189a81e361fbf96efd897",
+    "fresh_clean_extraction_result": "PASS_QUICK_AUDIT_R16",
+    "packages": 9,
+    "exact_parameter": "PASS",
+    "theorem_core": "PASS"
+  },
+  "nine_gate": {
+    "gates_1_7": "PASS",
+    "gate_8": "PASS_MANUSCRIPT_CANDIDATE_INSERTION",
+    "gate_9": "OPEN_FINALIZATION_ONLY"
+  },
+  "gate9_remaining": [
+    "freeze a portable full REPRODUCE top-level launcher/release tree",
+    "complete author metadata and declarations supplied by the author",
+    "freeze final repository/DOI metadata after deposit",
+    "assemble exact GitHub-ready/Zenodo-ready/CMDA release archives",
+    "run clean extraction/replay on the exact final release bytes",
+    "freeze final SHA256SUMS and rerun gates 1-8 on exact final bytes"
+  ],
+  "external_actions": "NOT_AUTHORIZED_AND_NOT_PERFORMED"
+}
