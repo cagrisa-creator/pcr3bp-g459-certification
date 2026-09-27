@@ -113,7 +113,7 @@ LC/time semantics & Two focus-specific Levi--Civita charts with positive time fa
 \end{tabularx}
 \end{table}
 
-\begin{theorem}[Fixed-G459 all-subcritical dynamical convexity and global sections]\label{thm:main}
+\begin{theorem}[All-subcritical dynamical convexity and global sections at $\gamma=459/1000$]\label{thm:main}
 Fix $\gamma=459/1000$. For every subcritical level $\Delta>0$, each bounded regularized physical component has dynamically convex Reeb flow: every contractible periodic orbit has disk-trivialized lower-semicontinuous Conley--Zehnder index at least three. Consequently, in each bounded component, a Birkhoff retrograde periodic orbit in the standard topological/shooting class binds a rational open book whose pages are disk-like global surfaces of section.
 \end{theorem}
 
@@ -211,6 +211,20 @@ m_s'(\gamma)
 \]
 Hence $\gamma$ is a one-to-one exact rational coordinate for the smaller physical mass ratio, up to exchange of the primaries. At the parameter used here, $m_s(459/1000)=1-\mu_*$ as recorded above. In particular, $\gamma$ is not being used as a synonym for the conventional PCR3BP mass ratio $\mu$.
 
+In this parameterization the first collinear point is represented by
+\[
+x_{L_1}=1-m_s(\gamma)-\gamma,
+\]
+and the first critical Jacobi value is obtained exactly from
+\[
+c_{L_1}(\gamma)
+=
+\frac{x_{L_1}^2}{2}
++\frac{1-m_s(\gamma)}{1-\gamma}
++\frac{m_s(\gamma)}{\gamma}.
+\]
+At $\gamma=459/1000$ this gives the rational value stated in Section~1.1.
+
 \subsection{Energy and regularization conventions}
 We use the Jacobi convention
 \[
@@ -226,7 +240,7 @@ The near-critical argument uses two focus-specific Levi--Civita charts, one for 
 
 \section{Fixed-energy convexity anchor and deep-energy propagation}
 \subsection{Exact global symplectic shear}
-At the reference G459 level, the regularized Hamiltonian admits the exact global momentum shear generated in physical coordinates by
+At the exact parameter $\gamma=459/1000$, the regularized Hamiltonian admits the exact global momentum shear generated in physical coordinates by
 \[
 G(q)=-\frac{53}{250}q_1q_2.
 \]
@@ -255,7 +269,7 @@ The fixed-energy certificate has $13{,}655$ final leaves: $11{,}902$ PASS, $1{,}
 An independent replay regenerated the exact polynomial data, rebuilt GCC and Clang computations, reconstructed the final ledger byte-for-byte, independently audited the tiling, and replayed all $13{,}655$ leaves with MPFR-192 directed rounding.
 
 \subsection{Rebased energy-ray propagation}
-The publication-critical base threshold is $\Delta_0=3/50000$. At this level the finite strict-convexity certificate closes, and exact energy-ray monotonicity propagates positivity for every $\Delta\ge\Delta_0$. The independent replay checks all $15{,}364$ global terminal leaves with MPFR-192 and zero failures, including the historical $4{,}207$ expected-PASS residual leaves. Therefore all levels $\Delta\ge3/50000$ are dynamically convex through strict convexity.
+The base threshold is $\Delta_0=3/50000$. At this level the finite strict-convexity certificate closes, and exact energy-ray monotonicity propagates positivity for every $\Delta\ge\Delta_0$. The independent replay checks all $15{,}364$ global terminal leaves with MPFR-192 and zero failures, including the $4{,}207$ residual leaves inherited from the fixed-energy computation. Therefore all levels $\Delta\ge3/50000$ are dynamically convex through strict convexity.
 
 \begin{proposition}[Deep subcritical regime]\label{prop:deep}
 For every $\Delta\ge3/50000$, each bounded regularized component is dynamically convex. More precisely, after the exact global momentum shear described above, the regularized $S^3$ lift is strictly convex, and hence every contractible periodic Reeb orbit has disk-trivialized Conley--Zehnder index at least three.
@@ -436,19 +450,19 @@ Final assembly & Dependency map connecting the deep and near-critical propositio
 \endgroup
 
 \section{Relation to previous work and scope}
-Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the relevant all-subcritical statement appears as Theorem~1.16 in arXiv:2506.17867v2 \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that G459 lies outside their theorem.
+Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the relevant all-subcritical statement appears as Theorem~1.16 in arXiv:2506.17867v2 \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that the parameter $\gamma=459/1000$ lies outside their theorem.
 
-This paper proves a fixed-parameter all-subcritical theorem at $\gamma=459/1000$. It does not prove an interval of mass ratios, optimality of the shear, uniqueness or nondegeneracy of all periodic orbits, or that every retrograde-looking numerical orbit is a valid rational-open-book binding. Historical VAST runs, broad orbit searches, failed global beta thresholds and exploratory floating scouts are provenance, not premises of the final proof.
+This paper proves a fixed-parameter all-subcritical theorem at $\gamma=459/1000$. It does not prove an interval of mass ratios, optimality of the shear, uniqueness or nondegeneracy of all periodic orbits, or that every retrograde-looking numerical orbit is a valid rational-open-book binding. Earlier exploratory computations, broad orbit searches, and failed global rotation thresholds are provenance, not premises of the final proof.
 
 \section{Reproducibility and availability}
-The final release will contain the frozen dependency map, Claim--Evidence Matrix, trust-base map, exact parameter/environment manifests, theorem-critical proof objects, independent checkers, a quick-audit route, a complete replay route and SHA-256 manifests. Persistent repository and DOI identifiers will be inserted only after the release assets are frozen.
+The archival release will contain the dependency map, Claim--Evidence Matrix, exact parameter and environment manifests, theorem-critical proof objects, independent checkers, a quick-audit route, a complete replay route, and SHA-256 manifests. Persistent repository and DOI identifiers will be inserted only after the release assets are finalized.
 
 \section*{Statements and Declarations}
 \paragraph{Funding.} No funding was received for conducting this study.
 \paragraph{Competing interests.} The author declares no competing interests.
 \paragraph{Author contributions.} The author conceived the study, developed the mathematical and computational methodology, implemented the software, performed the formal analysis and validated computations, curated the proof objects and research data, and wrote and revised the manuscript.
 \paragraph{Data availability.} The theorem-critical finite certificates, manifests and audit objects will be deposited in the final public reproducibility release. [Persistent identifier to be inserted after deposit.]
-\paragraph{Code availability.} The proof-critical source, replay scripts and independent checkers will be released with the frozen reproducibility package. [Persistent identifier to be inserted after deposit.]
+\paragraph{Code availability.} The proof-critical source, replay scripts and independent checkers will be released with the archival reproducibility package. [Persistent identifier to be inserted after deposit.]
 
 \begin{thebibliography}{99}
 
