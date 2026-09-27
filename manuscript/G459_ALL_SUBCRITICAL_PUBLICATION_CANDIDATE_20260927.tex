@@ -10,6 +10,8 @@
 \usepackage[authoryear,round]{natbib}
 \usepackage[hidelinks]{hyperref}
 \usepackage{microtype}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -55,7 +57,7 @@ For $\Delta\ge\Delta_0$, an explicit exact symplectic momentum shear converts th
 
 The proof is computer-assisted but finite in the strong sense needed for auditing. Search and adaptive subdivision are used only to generate finite proof objects. The theorem-critical claims are then accepted by exact arithmetic, validated interval inequalities, complete finite coverage, and independent fail-closed replay/checkers. The purpose of the computational layer is therefore not to sample trajectories, but to certify a finite list of mathematical inequalities and covering obligations from which the theorem follows.
 
-The rest of the paper is organized as follows. Section~2 fixes the Hamiltonian, parameter, regularization, time-change, and index conventions. Section~3 proves the deep subcritical branch by strict convexity after an exact shear. Section~4 develops the near-critical rotation and return estimates, while Section~5 closes the exceptional first-hit block. Section~6 assembles the two regimes into dynamical convexity and the global-section conclusion. Section~7 explains the computer-assisted proof architecture and reproducibility, and Section~8 records the relation to previous work and the precise scope of the theorem.
+Figure~\ref{fig:proof-architecture} gives a compact view of how the two regimes meet in the final theorem. The rest of the paper is organized as follows. Section~2 fixes the Hamiltonian, parameter, regularization, time-change, and index conventions. Section~3 proves the deep subcritical branch by strict convexity after an exact shear. Section~4 develops the near-critical rotation and return estimates, while Section~5 closes the exceptional first-hit block. Section~6 assembles the two regimes into dynamical convexity and the global-section conclusion. Section~7 explains the computer-assisted proof architecture and reproducibility, and Section~8 records the relation to previous work and the precise scope of the theorem.
 
 \subsection{Exact parameter and main theorem}
 We fix
@@ -103,7 +105,63 @@ The proof splits the subcritical ray at the exact rational threshold
 \[
 \Delta_0=\frac{3}{50000}.
 \]
-For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3$ lift. For $0<\Delta<\Delta_0$, we prove the Conley--Zehnder lower bound directly from validated rotation and return geometry. The near-critical certificates may use the critical face $\Delta=0$ as a boundary of an interval enclosure; the theorem itself concerns $\Delta>0$.
+For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3$ lift. For $0<\Delta<\Delta_0$, we prove the Conley--Zehnder lower bound directly from validated rotation and return geometry. The near-critical certificates may use the critical face $\Delta=0$ as a boundary of an interval enclosure; the theorem itself concerns $\Delta>0$. Figure~\ref{fig:energy-split} summarizes this exact decomposition.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Latex, font=\small]
+  \draw[->,thick] (0,0) -- (11.4,0) node[right] {$\Delta$};
+  \draw[thick] (0.2,-0.12) -- (0.2,0.12);
+  \node[below=4pt] at (0.2,0) {$0$};
+  \node[above=5pt,align=center] at (0.2,0) {first critical\\face};
+  \draw[thick] (3.8,-0.14) -- (3.8,0.14);
+  \node[below=4pt] at (3.8,0) {$\Delta_0=3/50000$};
+
+  \draw[decorate] (0.45,0.48) -- (3.55,0.48);
+  \node[align=center] at (2.0,1.08) {near-critical regime};
+  \node[align=center] at (2.0,0.70) {rotation + return geometry + first hit};
+
+  \draw[decorate] (4.05,0.48) -- (10.95,0.48);
+  \node[align=center] at (7.5,1.08) {deep subcritical regime};
+  \node[align=center] at (7.5,0.70) {exact shear + strict convexity + propagation};
+\end{tikzpicture}
+\caption{The exact energy split used in the proof. The theorem concerns the complete subcritical ray $\Delta>0$. The critical face $\Delta=0$ may occur only as a boundary of validated enclosures and is not part of the theorem statement.}
+\label{fig:energy-split}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  >=Latex,
+  node distance=7mm and 13mm,
+  box/.style={draw,rounded corners,align=center,inner sep=5pt,text width=3.3cm},
+  mid/.style={draw,rounded corners,align=center,inner sep=5pt,text width=4.0cm}
+]
+\node[box] (deep0) {Deep regime\\$\Delta\ge3/50000$};
+\node[box,below=of deep0] (deep1) {Exact momentum shear\\and tangent-Hessian reduction};
+\node[box,below=of deep1] (deep2) {Validated positivity\\$\Rightarrow$ strict convexity};
+
+\node[box,right=26mm of deep0] (near0) {Near-critical regime\\$0<\Delta<3/50000$};
+\node[box,below=of near0] (near1) {Rotation inequality +\\short-period exclusion};
+\node[box,below=of near1] (near2) {Finite return graph +\\first-hit compensation};
+
+\coordinate (midpoint) at ($(deep2)!0.5!(near2)$);
+\node[mid,below=14mm of midpoint] (dc) {Dynamical convexity\\$\mu_{\mathrm{CZ}}^{\mathrm{disk}}\ge3$};
+\node[mid,below=of dc] (gss) {Birkhoff retrograde binding\\$\Rightarrow$ rational open book\\with disk-like global pages};
+
+\draw[->] (deep0) -- (deep1);
+\draw[->] (deep1) -- (deep2);
+\draw[->] (near0) -- (near1);
+\draw[->] (near1) -- (near2);
+\draw[->] (deep2) |- (dc);
+\draw[->] (near2) |- (dc);
+\draw[->] (dc) -- (gss);
+\end{tikzpicture}
+\caption{Logical architecture of the proof. The two energy regimes use different mechanisms but meet at the same index conclusion, after which the contact-topological open-book theorem gives the global surfaces of section.}
+\label{fig:proof-architecture}
+\end{figure}
+
 
 \section{Hamiltonian, regularization, and conventions}
 We use standard collision-regularization ideas in the Hamiltonian setting; for the geometric regularization viewpoint see, for example, \citet{Moser1970} and the PCR3BP treatment in \citet{FrauenfelderVanKoert2018}. For index conventions and homotopy properties of the Maslov/Robbin--Salamon framework we use \citet{RobbinSalamon1993}. The sign convention $\Sigma_c=H^{-1}(-c)$ is fixed throughout. At the first critical point $L_1$, $H(L_1)=-c_{L_1}$, so $\Delta>0$ implies $-c<-c_{L_1}$.
@@ -204,7 +262,34 @@ Let $B=s04\_d0\cup s06\_d0$. On $B$, and on a larger surrounding corridor, valid
 \[
 \dot\theta<0,\qquad \dot A<0,
 \]
-and the two $\phi$ faces point strictly outward. Hence local recirculation is impossible.
+and the two $\phi$ faces point strictly outward. Hence local recirculation is impossible. The entry structure used in the proof is summarized schematically in Figure~\ref{fig:first-hit}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[>=Latex, font=\small]
+  \draw[thick] (0,0) rectangle (7,3.6);
+  \node[align=center] at (3.5,1.8) {$B=s04\_d0\cup s06\_d0$\\[2pt]$\beta\ge0$ inside $B$\\$\dot\theta<0,\ \dot A<0$};
+
+  \draw[->,thick] (1.7,5.0) -- (1.7,3.65);
+  \node[align=center,above] at (1.7,5.0) {upper-$\theta$\\first-hit family};
+
+  \draw[->,thick] (5.3,5.0) -- (5.3,3.65);
+  \node[align=center,above] at (5.3,5.0) {upper-$A$\\first-hit family};
+
+  \draw[->,thick] (0,1.05) -- (-1.25,1.05);
+  \draw[->,thick] (0,2.55) -- (-1.25,2.55);
+  \draw[->,thick] (7,1.05) -- (8.25,1.05);
+  \draw[->,thick] (7,2.55) -- (8.25,2.55);
+  \node[align=center,rotate=90] at (-1.65,1.8) {$\phi$ faces outward};
+  \node[align=center,rotate=270] at (8.65,1.8) {$\phi$ faces outward};
+
+  \draw[->] (4.6,2.6) -- (3.6,1.5);
+  \node[align=left] at (5.55,2.45) {monotone\\forward flow};
+\end{tikzpicture}
+\caption{Schematic first-hit geometry of the exceptional block $B$; the drawing is not a coordinate projection and is not to scale. The validated face signs exclude forward entry through the two $\phi$ faces. Hence every maximal residence in $B$ is paired with exactly one preceding upper-$\theta$ or upper-$A$ first-hit segment, which supplies the integrated rotation compensation used in Lemma~\ref{lem:first-hit}.}
+\label{fig:first-hit}
+\end{figure}
+
 
 \subsection{Theta-entry geometry}
 On the complete theta-entry shell, $\dot A<0$. All possible negative $\beta$ is confined to a narrow exact sublayer $N$, where
