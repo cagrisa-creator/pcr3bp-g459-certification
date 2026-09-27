@@ -26,11 +26,14 @@ jobs:
         if: always()
         run: |
           mkdir -p publication_build
-          cp manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf publication_build/ 2>/dev/null || true
-          cp manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log publication_build/ 2>/dev/null || true
-          if [ -f manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log ]; then
-            grep -E "Warning|Overfull|Underfull|undefined|multiply defined" manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log > publication_build/LATEX_WARNINGS.txt || true
+          PDF_PATH="$(find . -name 'G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf' -type f | head -n 1)"
+          LOG_PATH="$(find . -name 'G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log' -type f | head -n 1)"
+          if [ -n "$PDF_PATH" ]; then cp "$PDF_PATH" publication_build/; fi
+          if [ -n "$LOG_PATH" ]; then
+            cp "$LOG_PATH" publication_build/
+            grep -E "Warning|Overfull|Underfull|undefined|multiply defined" "$LOG_PATH" > publication_build/LATEX_WARNINGS.txt || true
           fi
+          find . -maxdepth 3 -name 'G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.*' -type f -print > publication_build/FOUND_BUILD_FILES.txt || true
 
       - name: Upload PDF and logs
         if: always()
