@@ -1,0 +1,41 @@
+name: Build publication PDF
+
+on:
+  push:
+    branches:
+      - publication-editorial-revision-20260927
+    paths:
+      - manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.tex
+      - .github/workflows/build-publication-pdf.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.tex
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Collect QA files
+        if: always()
+        run: |
+          mkdir -p publication_build
+          cp manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf publication_build/ 2>/dev/null || true
+          cp manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log publication_build/ 2>/dev/null || true
+          if [ -f manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log ]; then
+            grep -E "Warning|Overfull|Underfull|undefined|multiply defined" manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.log > publication_build/LATEX_WARNINGS.txt || true
+          fi
+
+      - name: Upload PDF and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-pdf-qa
+          path: publication_build/
+          if-no-files-found: warn
