@@ -1,0 +1,70 @@
+name: Prepare release freeze
+
+on:
+  push:
+    branches:
+      - publication-editorial-revision-20260927
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout release-candidate branch
+        uses: actions/checkout@v4
+
+      - name: Compile publication PDF
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.tex
+          args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+      - name: Locate and stage audited PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          PDF="$(find . -name 'G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf' -type f | head -n 1)"
+          test -n "$PDF"
+          if [ "$PDF" != "./manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf" ]; then
+            cp "$PDF" manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf
+          fi
+
+      - name: Run quick audit
+        run: python3 quick_audit/scripts/QUICK_AUDIT.py
+
+      - name: Generate exact release-tree SHA256SUMS
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp)"
+          git ls-files -z | while IFS= read -r -d '' f; do
+            if [ "$f" != "SHA256SUMS" ]; then
+              printf '%s\0' "$f"
+            fi
+          done > "$TMP"
+          printf '%s\0' "manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf" >> "$TMP"
+          sort -zu "$TMP" | while IFS= read -r -d '' f; do
+            test -f "$f"
+            sha256sum "$f"
+          done > SHA256SUMS
+          rm -f "$TMP"
+
+      - name: Verify release tree
+        run: python3 scripts/release_verify.py
+
+      - name: Commit generated freeze artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manuscript/G459_ALL_SUBCRITICAL_PUBLICATION_CANDIDATE_20260927.pdf SHA256SUMS
+          if git diff --cached --quiet; then
+            echo "No generated freeze changes."
+            exit 0
+          fi
+          git commit -m "Freeze audited publication PDF and SHA256SUMS"
+          git push
