@@ -1,13 +1,13 @@
-# PCR3BP G459 certification — private staging repository
+# PCR3BP G459 certification
 
-This repository is a **private pre-publication staging area** for the R16 all-subcritical G459 computer-assisted proof package.
+This repository contains the R16 all-subcritical G459 computer-assisted proof package for the planar circular restricted three-body problem.
 
 ## Current status
 
 - Mathematical project status: closed at project level for the frozen R16 theorem target.
-- This repository is **not yet the final public release**.
-- The manuscript and quick-audit bundle here are release candidates.
-- The final portable full-reproduction launcher/tree, final author metadata, license, citation metadata, DOI/repository identifiers, and final byte-freeze are still to be completed before any public release.
+- The manuscript and quick-audit bundle are release candidates.
+- The repository is being prepared for public archival release and Zenodo deposit.
+- The final portable full-reproduction launcher/tree, final license, citation metadata, DOI/repository identifiers, and final byte-freeze are still to be completed before the archival release is declared final.
 
 ## Contents
 
@@ -29,6 +29,6 @@ The expected success marker is:
 PASS_QUICK_AUDIT_R16
 ```
 
-## Important
+## Release note
 
-Do not treat this staging repository as the archival release. Public release should occur only after the final reproducibility tree and final metadata are frozen and audited.
+Public visibility does not by itself declare this repository to be the final archival release. The final release will be frozen only after the remaining reproducibility and metadata tasks are completed and audited.
