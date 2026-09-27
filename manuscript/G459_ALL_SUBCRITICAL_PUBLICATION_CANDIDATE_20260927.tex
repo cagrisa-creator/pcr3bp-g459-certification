@@ -141,7 +141,7 @@ For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3
 
   \draw[thick] (4.28,0.46) -- (10.30,0.46);
   \node[align=center,text width=4.6cm] at (7.3,1.20)
-    {Deep subcritical regime\\$\Delta\ge\Delta_0$\\exact shear, strict convexity, propagation};
+    {Deep subcritical regime\\$\Delta\ge\Delta_0$\\exact shear\\strict convexity\\propagation};
 
   \node[align=center] at (0.8,-0.72) {first critical\\face};
 \end{tikzpicture}
@@ -159,7 +159,7 @@ For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3
   mid/.style={draw,rounded corners,align=center,inner sep=5pt,text width=4.4cm}
 ]
 \node[box] (deep0) {Deep regime\\$\Delta\ge3/50000$};
-\node[box,below=of deep0] (deep1) {Exact momentum shear\\and tangent-Hessian\\reduction};
+\node[box,below=of deep0] (deep1) {Exact momentum\\shear and tangent-Hessian\\reduction};
 \node[box,below=of deep1] (deep2) {Validated positivity\\$\Rightarrow$ strict convexity};
 
 \node[box,right=26mm of deep0] (near0) {Near-critical regime\\$0<\Delta<3/50000$};
@@ -168,7 +168,7 @@ For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3
 
 \coordinate (midpoint) at ($(deep2)!0.5!(near2)$);
 \node[mid,below=14mm of midpoint] (dc) {Dynamical convexity\\$\mu_{\mathrm{CZ}}^{\mathrm{disk}}\ge3$};
-\node[mid,below=of dc] (gss) {Birkhoff retrograde binding\\$\Rightarrow$ rational open book\\with disk-like global pages};
+\node[mid,below=of dc] (gss) {Birkhoff retrograde\\binding\\$\Rightarrow$ rational open book\\with disk-like global pages};
 
 \draw[->] (deep0) -- (deep1);
 \draw[->] (deep1) -- (deep2);
