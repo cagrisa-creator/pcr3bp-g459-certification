@@ -1,4 +1,0 @@
-PRIVATE PRE-PUBLICATION STAGING ONLY
-
-Do not make this repository public yet.
-Final license, CITATION.cff, Zenodo metadata, DOI, full REPRODUCE tree, and final byte freeze are intentionally not present yet.
