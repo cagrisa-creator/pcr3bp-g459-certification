@@ -16,6 +16,13 @@ jobs:
       - name: Checkout release-candidate branch
         uses: actions/checkout@v4
 
+      - name: Validate CITATION.cff
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet cffconvert
+          cffconvert --validate
+
       - name: Compile publication PDF
         uses: xu-cheng/latex-action@v3
         with:
