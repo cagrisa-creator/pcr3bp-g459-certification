@@ -37,9 +37,9 @@ We prove a computer-assisted Birkhoff global-section theorem for the planar circ
 \section{Introduction}
 The planar circular restricted three-body problem (PCR3BP) is one of the classical testing grounds for the interaction between celestial mechanics, Hamiltonian dynamics, and modern symplectic geometry. In rotating coordinates it is a two-degree-of-freedom Hamiltonian system, but its regularized energy levels already display a rich mixture of periodic motion, bifurcation, transport, and collision geometry. A central idea going back to Birkhoff is that part of this complexity can be organized by a global surface of section: a two-dimensional surface whose interior is transverse to the flow and which is met repeatedly by every orbit in the relevant component. Such a section replaces a continuous three-dimensional flow by an area-preserving return map and therefore provides a natural framework for studying periodic orbits and global dynamics; see \citet{Birkhoff1915}.
 
-Modern proofs of global sections in the PCR3BP pass through contact and symplectic geometry. Below the first critical value, collision regularization converts each bounded physical component into a compact contact-type energy hypersurface; see \citet{AlbersEtAlContact2012} and the systematic account in \citet{FrauenfelderVanKoert2018}. Global sections in important PCR3BP regimes were established by holomorphic-curve methods in \citet{AlbersEtAlGSS2012}. A particularly effective route is dynamical convexity: in the convention used here, every contractible periodic Reeb orbit must have lower-semicontinuous disk-trivialized Conley--Zehnder index at least three. Strict convexity of an $S^3$-type energy hypersurface in $\mathbb{R}^4$ implies this index bound through the work of Hofer, Wysocki and Zehnder \citep{HWZ1998}; for the rational-open-book conclusion on $\mathbb{R}P^3$, we use \citet{HryniewiczSalomao2016}.
+Modern proofs of global sections in the PCR3BP pass through contact and symplectic geometry. Below the first critical value, collision regularization converts each bounded physical component into a compact contact-type energy hypersurface; see \citet{AlbersEtAlContact2012} and the systematic account in \citet{FrauenfelderVanKoert2018}. Global sections in important PCR3BP regimes were established by holomorphic-curve methods in \citet{AlbersEtAlGSS2012}; the broader finite-energy-foliation framework is developed in \citet{HWZ2003}. A particularly effective route is dynamical convexity: in the convention used here, every contractible periodic Reeb orbit must have lower-semicontinuous disk-trivialized Conley--Zehnder index at least three. Strict convexity of an $S^3$-type energy hypersurface in $\mathbb{R}^4$ implies this index bound through the work of Hofer, Wysocki and Zehnder \citep{HWZ1998}; for the rational-open-book conclusion on $\mathbb{R}P^3$, we use \citet{HryniewiczSalomao2016}.
 
-Validated computation has become increasingly useful when the relevant convexity or index inequalities are explicit but not accessible by hand over the entire parameter domain. In the PCR3BP, \citet{JoungVanKoert2025} developed computational symplectic methods for symmetric periodic orbits and Conley--Zehnder indices. More recently, \citet{LiuSalomao2025} proved finite-energy-foliation results and, in particular, an all-subcritical Birkhoff conclusion for mass ratios sufficiently close to the equal-mass case. The neighborhood in that theorem is existential for the comparison needed here. The present paper therefore makes a different fixed-parameter statement: it treats the exact auxiliary parameter
+The index-theoretic viewpoint is already visible in the rotating Kepler limit, where the Conley--Zehnder indices of all subcritical periodic orbits can be determined explicitly and dynamical convexity follows on the universal cover \citep{AlbersEtAlKepler2013}. Validated computation becomes useful when the corresponding convexity or index inequalities in the PCR3BP are explicit but not accessible by hand over the entire parameter domain. In the PCR3BP, \citet{JoungVanKoert2025} developed computational symplectic methods for symmetric periodic orbits and Conley--Zehnder indices. More recently, \citet{LiuSalomao2025} proved finite-energy-foliation results and, in particular, an all-subcritical Birkhoff conclusion for mass ratios sufficiently close to the equal-mass case. The neighborhood in that theorem is existential for the comparison needed here. The present paper therefore makes a different fixed-parameter statement: it treats the exact auxiliary parameter
 \[
 \gamma=\frac{459}{1000},
 \]
@@ -106,7 +106,7 @@ The proof splits the subcritical ray at the exact rational threshold
 For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3$ lift. For $0<\Delta<\Delta_0$, we prove the Conley--Zehnder lower bound directly from validated rotation and return geometry. The near-critical certificates may use the critical face $\Delta=0$ as a boundary of an interval enclosure; the theorem itself concerns $\Delta>0$.
 
 \section{Hamiltonian, regularization, and conventions}
-The sign convention $\Sigma_c=H^{-1}(-c)$ is fixed throughout. At the first critical point $L_1$, $H(L_1)=-c_{L_1}$, so $\Delta>0$ implies $-c<-c_{L_1}$.
+We use standard collision-regularization ideas in the Hamiltonian setting; for the geometric regularization viewpoint see, for example, \citet{Moser1970} and the PCR3BP treatment in \citet{FrauenfelderVanKoert2018}. For index conventions and homotopy properties of the Maslov/Robbin--Salamon framework we use \citet{RobbinSalamon1993}. The sign convention $\Sigma_c=H^{-1}(-c)$ is fixed throughout. At the first critical point $L_1$, $H(L_1)=-c_{L_1}$, so $\Delta>0$ implies $-c<-c_{L_1}$.
 
 The two bounded components require focus-specific Levi--Civita charts in the near-critical argument. The final proof uses the corrected two-component semantics: the two charts have positive Hamiltonian time changes, and reduced linearized cocycles are compared after transporting the reduced frame/trivialization. Equality of Conley--Zehnder and Robbin--Salamon data follows from the transported reduced-cocycle conjugacy under positive time reparametrization, not from equality of the time parameters.
 
@@ -148,10 +148,10 @@ For every $\Delta\ge3/50000$, each bounded regularized component is dynamically 
 \end{proposition}
 
 \section{Near-critical rotation and finite return geometry}
-We now restrict to $0<\Delta<3/50000$.
+We now restrict to $0<\Delta<3/50000$. The argument is by contradiction. Assume that a contractible periodic orbit has disk-trivialized $\CZ\le2$. We first convert this index assumption into an upper bound on the total admissible rotation. A validated lower bound on the instantaneous rotation then produces an occupation-time budget. Short periodic trajectories are excluded separately. Any remaining low-index orbit must therefore be long, and the finite return geometry forces it to revisit a residual region so many times that the occupation budget is violated. Section~5 treats the only local block where the baseline pointwise rotation estimate is not uniform by pairing each residence with a preceding first-hit entry segment.
 
 \subsection{Segmentwise rotation estimate}
-In the final transported reduced contact frame, the project constructs a pointwise quantity $\beta(w)$ satisfying
+Let $\Theta$ denote the angular variation of the transported reduced linearized flow in the chosen contact-plane trivialization. The validated quantity $\beta(w)$ is a pointwise lower bound for its instantaneous rotation, so that
 \[
 \Theta(b)-\Theta(a)\ge \int_a^b \beta(w(t))\,dt.
 \]
@@ -159,7 +159,7 @@ The rotation-index convention used here gives
 \[
 \Theta(T)>2\pi \quad\Longrightarrow\quad \CZ^{\mathrm{disk}}\ge3.
 \]
-On the canonical near-critical beta-chart partition, the finite certificate closes all $32{,}661$ parent obligations for the target $\beta\ge1/100$ on its intended domain.
+On the finite near-critical chart partition, the certificate verifies all $32{,}661$ parent obligations for the target $\beta\ge1/100$ on the region where the baseline pointwise bound is intended to hold.
 
 The same framework uses stronger regions where $\beta\ge2/5$ and $\beta\ge7/200$. Let $t_{40}$ and $t_{35}$ denote the certified occupation times in those two stronger regions, and let $t_R$ be the remaining time to which the baseline bound $\beta\ge1/100$ applies. Thus
 \[
@@ -178,26 +178,26 @@ If a contractible periodic orbit had $\CZ^{\mathrm{disk}}\le2$, the rotation-ind
 \[
 2T+78t_{40}+5t_{35}\le400\pi.
 \]
-The convention audit also checks the Robbin--Salamon/Conley--Zehnder comparison and the complementary contribution used in the underlying N2 bridge; no untransported LC frame or equal-clock shortcut enters this inequality.
+The convention audit separately verifies the Robbin--Salamon/Conley--Zehnder comparison and the complementary contribution used in this rotation estimate. In particular, the argument never identifies the two Levi--Civita time variables: the reduced frame and cocycle are transported through the positive time changes.
 
 \subsection{Current-neck short-period exclusion}
-The current-neck residual is controlled by validated Yorke/Wirtinger-type period estimates, exact energy support, and displacement inequalities. The final theorem is
+The current-neck region is controlled by validated Yorke/Wirtinger-type period estimates, exact energy support, and displacement inequalities. The certified conclusion is
 \[
 T_{\widehat H}>3
 \]
-for every nonconstant periodic orbit represented by the canonical current-neck residual. The independent replay reconstructs exactly the canonical $1{,}222$ boxes: $1{,}212$ close by the unweighted Yorke test, nine of the ten residual boxes close by the fixed-diagonal weighted Yorke test, and the single remaining index closes by the independent scalar-displacement certificate. Thus the accounting is $1{,}222/1{,}222$, with no missing or extra canonical key.
+for every nonconstant periodic orbit represented in the finite current-neck cover. The independent replay reconstructs exactly the $1{,}222$ boxes: $1{,}212$ close by the unweighted Yorke test, nine of the ten residual boxes close by the fixed-diagonal weighted Yorke test, and the single remaining index closes by the independent scalar-displacement certificate. Thus the accounting is $1{,}222/1{,}222$, with no missing or extra cover element.
 
 \subsection{Finite return graph and long regime}
-The residual return geometry is encoded by a finite $\theta$-ordered graph. The independent N4 backend validates all $30/30$ theorem-critical half-phase transitions. Its conservative collapsed hard graph has $34$ hard edges, no self edge, no $\theta$-order violation, is acyclic, and has maximum hard-edge path length $5$. This is the property used downstream: a completed residual cluster contains at most seven residual visits.
+The residual return geometry is encoded by a finite $\theta$-ordered graph. An independent checker validates all $30/30$ theorem-critical half-phase transitions. The resulting conservative hard graph has $34$ edges, no self edge, no $\theta$-order violation, is acyclic, and has maximum hard-edge path length $5$. The only consequence used below is therefore transparent: a completed residual cluster contains at most seven residual visits.
 
-The corresponding independent replay then checks the validated propagation obligations that make the counting argument quantitative: $2{,}392/2{,}392$ strong-window obligations, $2{,}362/2{,}362$ outer safe half-obligations, $10/10$ hard-sink half-obligations, and $2{,}372/2{,}372$ detachment half-obligations pass. The exact residence estimate is
+An independent propagation replay then checks the validated obligations that make this counting argument quantitative: $2{,}392/2{,}392$ strong-window obligations, $2{,}362/2{,}362$ outer safe half-obligations, $10/10$ hard-sink half-obligations, and $2{,}372/2{,}372$ detachment half-obligations pass. The exact residence estimate is
 \[
 T_{\mathrm{res}}<\frac{145\pi}{106496}<\frac1{230},
 \]
-while the occupation argument gives $t_R\ge219/100$. Hence a hypothetical long low-index orbit must make at least $504$ residual visits. Since N4 allows at most seven visits per completed cluster, at least $72$ clusters are required. The exact cluster arithmetic contradicts the available long-regime occupation budget. This closes the hypothetical low-index regime $T>400\pi/7$ without enumerating periodic orbits.
+while the occupation argument gives $t_R\ge219/100$. Hence a hypothetical long low-index orbit must make at least $504$ residual visits. Since the return graph allows at most seven visits per completed cluster, at least $72$ clusters are required. The exact cluster arithmetic contradicts the available long-regime occupation budget. This closes the hypothetical low-index regime $T>400\pi/7$ without enumerating periodic orbits.
 
-\section{The complementary seed-7 block}
-The last local obstruction arises from an exact $16$-cell seed cover. Fourteen cells satisfy the pointwise theorem $\beta\ge1/100$. Two cells, denoted $s04\_d0$ and $s06\_d0$, do not. They are never relabeled as pointwise $\beta\ge1/100$ cells; instead, their union is controlled by an integrated first-hit argument.
+\section{The exceptional first-hit block}
+The previous rotation argument uses the baseline estimate $\beta\ge1/100$ pointwise. The last local obstruction is a small region where that pointwise statement is not true, so it must be handled without weakening the global rotation budget. The region arises from an exact $16$-cell seed cover. Fourteen cells satisfy the pointwise theorem $\beta\ge1/100$. Two cells, denoted $s04\_d0$ and $s06\_d0$, do not. They are never relabeled as pointwise $\beta\ge1/100$ cells; instead, their union is controlled by an integrated first-hit argument.
 
 \subsection{One-way bad block and corridor}
 Let $B=s04\_d0\cup s06\_d0$. On $B$, and on a larger surrounding corridor, validated inequalities give
@@ -250,7 +250,7 @@ The outward $\phi$-face signs exclude forward $\phi$ entry. The strict $\theta$ 
 \end{proof}
 
 \begin{corollary}
-Each entry-plus-$B$ pair satisfies the effective $\beta=1/100$ rotation budget. Hence the two exceptional seed cells are discharged by integrated rotation, and the exact seed-7 cover is closed $16/16$.
+Each entry-plus-$B$ pair satisfies the effective $\beta=1/100$ rotation budget. Hence the two exceptional seed cells are discharged by integrated rotation, and the complete $16$-cell cover is closed.
 \end{corollary}
 
 \begin{proposition}[Near-critical regime]\label{prop:near}
@@ -258,44 +258,46 @@ For every $0<\Delta<3/50000$, each bounded regularized component is dynamically 
 \end{proposition}
 
 \section{Proof of the main theorem}\label{sec:assembly}
-Proposition~\ref{prop:deep} covers $\Delta\ge3/50000$, while Proposition~\ref{prop:near} covers $0<\Delta<3/50000$. These intervals form the complete subcritical ray $\Delta>0$. In the deep branch, strict convexity gives dynamical convexity by \citep{HWZ1998}. In the near-critical branch, assume a contractible periodic orbit had disk-trivialized $\CZ\le2$. The corrected two-component semantics, segmentwise rotation inequality, current-neck exclusion, finite return graph, long-regime contradiction and complete seed-7 discharge reduce every possible itinerary to one of the validated closed cases, contradicting the low-index assumption. Thus every contractible orbit has $\CZ^{\mathrm{disk}}\ge3$.
+Proposition~\ref{prop:deep} covers $\Delta\ge3/50000$, while Proposition~\ref{prop:near} covers $0<\Delta<3/50000$. These intervals form the complete subcritical ray $\Delta>0$. In the deep branch, strict convexity gives dynamical convexity by \citep{HWZ1998}. In the near-critical branch, assume a contractible periodic orbit had disk-trivialized $\CZ\le2$. The two-component Levi--Civita semantics, segmentwise rotation inequality, current-neck exclusion, finite return graph, long-regime contradiction, and complete first-hit discharge reduce every possible itinerary to one of the validated closed cases, contradicting the low-index assumption. Thus every contractible orbit has $\CZ^{\mathrm{disk}}\ge3$.
 
 The exact shear preserves disk-trivialized CZ under transported capping-disk trivializations. For the regularization double cover $S^3\to\RP^3$, a contractible capping disk lifts, and the pulled-back contact planes and linearized flows give the same disk-trivialized index upstairs and downstairs.
 
 The standard Birkhoff retrograde orbit on a subcritical regularized component has the $2$-unknot and rational self-linking $-1/2$ topology used in the literature; we use the discussion surrounding Theorem~1.5 of \citet{LiuSalomao2025}. Hryniewicz and Salom\~ao prove the rational-open-book/global-section implication for a $p$-unknotted orbit with self-linking $-1/p$ in a dynamically convex Reeb flow on a lens space of order $p$; in the cited version this is Corollary~1.8 \citep{HryniewiczSalomao2016}. Taking $p=2$ gives the final statement of Theorem~\ref{thm:main}.
 
-\section{Computer-assisted proof architecture and trust base}
-The proof distinguishes search/generation from theorem acceptance. Adaptive generators, numerical scouts, plots, and ordinary floating-point integrations are not theorem authorities. Theorem-critical computational claims are accepted only through exact arithmetic, validated interval arithmetic, finite proof objects and fail-closed checkers.
+\section{Computer-assisted proof architecture and reproducibility}
+The computational part is organized so that search is separated from theorem acceptance. Adaptive subdivision, numerical scouting, and exploratory floating-point integrations may suggest a finite cover or a useful decomposition, but none of these objects is accepted as proof by itself. A theorem-critical claim is accepted only after it has been converted into a finite proof object whose obligations are checked with exact arithmetic or validated interval arithmetic.
 
-For reproducibility, we use the following independence scale: I0, same-program rerun; I1, clean-environment or cross-compiler replay; I2, independent replay/checker of the same finite certificate; I3, independently derived checker or alternate arithmetic implementation; I4, independent researcher/team reproduction; I5, independent reconstruction from the paper specification. Every theorem-critical finite certificate family used in the proof meets at least I2. I3 is claimed only where the implementation independence actually justifies it.
+There are four recurring layers. First, an exact symbolic layer fixes the parameter conventions and reduces the relevant inequalities to explicit algebraic expressions. Second, a generator constructs a finite cover together with local obligations such as positivity, exclusion, transition, or residence-time bounds. Third, coverage is checked independently: every admissible point must belong either to a certified PASS element or to a mathematically justified OUTSIDE element, with no unresolved gap. Fourth, an independent replay/checker reevaluates the finite obligations using directed rounding; the deepest replays use MPFR multiple-precision arithmetic, whose correct-rounding implementation is described by \citet{FousseEtAl2007}. For the general interval-arithmetic framework see \citet{Moore1966}.
 
-Table~\ref{tab:proof-evidence} gives the publication-facing traceability map. The release manifest records the full SHA-256 values for every frozen package, while the internal Claim--Evidence Matrix retains the finer claim-by-claim genealogy.
+This distinction is important. The theorem does not rely on the behavior of a search heuristic, on visual plots, or on an unverified numerical trajectory. It relies on finitely many explicit inequalities and covering statements. The search program may be replaced without changing the proof, provided that the same finite obligations are produced and accepted by the checker.
 
-\begingroup\footnotesize\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.11\textwidth}>{\raggedright\arraybackslash}p{0.48\textwidth}>{\raggedright\arraybackslash}p{0.15\textwidth}@{}}
-\caption{Compact proof-to-evidence map for theorem-critical nodes.}\label{tab:proof-evidence}\\
+Table~\ref{tab:proof-evidence} summarizes the theorem-facing evidence. Detailed package identifiers, full SHA-256 values, compiler information, and the finer Claim--Evidence genealogy belong to the archival reproducibility release rather than to the logical narrative of the proof.
+
+\begingroup\footnotesize
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.21\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}@{}}
+\caption{Publication-facing traceability map for theorem-critical computer-assisted components.}\label{tab:proof-evidence}\\
 \toprule
-Manuscript role & Nodes & Archived evidence & Acceptance \\
+Proof component & Finite mathematical evidence & Independent acceptance \\
 \midrule
 \endfirsthead
 \toprule
-Manuscript role & Nodes & Archived evidence & Acceptance \\
+Proof component & Finite mathematical evidence & Independent acceptance \\
 \midrule
 \endhead
-Parameter/fixed anchor & F0--F2 & \nolinkurl{R16_FIXED_TRUST_BASE_I2_EVIDENCE_20260926.zip} and external-theorem/convention audit & exact/I2 + theory audit \\
-Deep-energy propagation & D1 & \nolinkurl{R16_D1_I2_GLOBAL_MPFR_REPLAY_20260925.zip} & $15{,}364/15{,}364$ \\
-LC semantics and rotation budget & N0--N2 & N0 semantic audit; N1 final I2 package; N2 theory/exact-arithmetic closure & I2 where finite + theory audit \\
-Short/return/long regime & N3--N5 & authoritative N3, N4 and N5 I2 evidence packages & complete I2 replay \\
-Complementary block & C0--C4 & \nolinkurl{R16_COMPLEMENTARY_TRUST_BASE_I2_EVIDENCE_20260926.zip} & complete I2 audit \\
-Entry and pairing & U1--U2, A0--A2, E0--E1 & \nolinkurl{R16_FINAL_ENTRY_ASSEMBLY_I2_EVIDENCE_20260926.zip} & complete assembly audit \\
-Seed-7 discharge & S2 & final-entry audit + complementary trust-base audit & $14+2=16/16$ \\
-Final theorem & T0 & dependency map, Claim--Evidence Matrix, trust-base map, nine-gate report & complete dependency audit \\
+Exact parameter and fixed-energy anchor & Exact rational parameter reconstruction, symbolic tangent-Hessian reduction, and a $13{,}655$-leaf cover & Exact reconstruction plus independent MPFR-192 replay and tiling audit \\
+Deep-energy propagation & $15{,}364$ terminal obligations at the rebased threshold and monotone energy-ray propagation & $15{,}364/15{,}364$ independent MPFR-192 acceptance \\
+Rotation and index bridge & Finite near-critical chart cover, transported reduced-frame convention, and exact occupation identity & Independent semantic/index audit plus finite replay of the certified chart obligations \\
+Short- and long-orbit control & $1{,}222$ current-neck boxes, $30$ return transitions, acyclic hard graph, residence and propagation bounds & Independent short-period, transition-graph, and propagation checkers \\
+Exceptional first-hit block & Complete $16$-cell cover, $3072$ upper-$\theta$ entry roots, upper-$A$ entry bounds, and paired integrated margins & Independent coverage and entry-assembly replay \\
+Final assembly & Dependency map connecting the deep and near-critical propositions to Theorem~\ref{thm:main} & Claim--Evidence and release-manifest audit \\
 \bottomrule
 \end{longtable}
+\endgroup
 
 \section{Relation to previous work and scope}
-Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the frozen source audit identifies the relevant all-subcritical result as Theorem~1.16 in the cited arXiv version \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that G459 lies outside their theorem.
+Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the relevant all-subcritical statement appears as Theorem~1.16 in the cited arXiv version \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that G459 lies outside their theorem.
 
-This paper proves a fixed-mass all-subcritical theorem at $\gamma=459/1000$. It does not prove an interval of mass ratios, optimality of the shear, uniqueness or nondegeneracy of all periodic orbits, or that every retrograde-looking numerical orbit is a valid rational-open-book binding. Historical VAST runs, broad orbit searches, failed global beta thresholds and exploratory floating scouts are provenance, not premises of the final proof.
+This paper proves a fixed-parameter all-subcritical theorem at $\gamma=459/1000$. It does not prove an interval of mass ratios, optimality of the shear, uniqueness or nondegeneracy of all periodic orbits, or that every retrograde-looking numerical orbit is a valid rational-open-book binding. Historical VAST runs, broad orbit searches, failed global beta thresholds and exploratory floating scouts are provenance, not premises of the final proof.
 
 \section{Reproducibility and availability}
 The final release will contain the frozen dependency map, Claim--Evidence Matrix, trust-base map, exact parameter/environment manifests, theorem-critical proof objects, independent checkers, a quick-audit route, a complete replay route and SHA-256 manifests. Persistent repository and DOI identifiers will be inserted only after the release assets are frozen.
@@ -313,25 +315,25 @@ The final release will contain the frozen dependency map, Claim--Evidence Matrix
 G.~D. Birkhoff.
 \newblock The restricted problem of three bodies.
 \newblock \emph{Rendiconti del Circolo Matematico di Palermo}, 39:265--334, 1915.
-\newblock \url{https://doi.org/10}.1007/BF03015982.
+\newblock \url{https://doi.org/10.1007/BF03015982}.
 
 \bibitem[Hofer et~al.(1998)Hofer, Wysocki, and Zehnder]{HWZ1998}
 H. Hofer, K. Wysocki, and E. Zehnder.
 \newblock The dynamics on three-dimensional strictly convex energy surfaces.
 \newblock \emph{Annals of Mathematics}, 148(1):197--289, 1998.
-\newblock \url{https://doi.org/10}.2307/120994.
+\newblock \url{https://doi.org/10.2307/120994}.
 
 \bibitem[Hryniewicz and Salom\~ao(2016)]{HryniewiczSalomao2016}
 U.~L. Hryniewicz and P.~A.~S. Salom\~ao.
 \newblock Elliptic bindings for dynamically convex Reeb flows on the real projective three-space.
 \newblock \emph{Calculus of Variations and Partial Differential Equations}, 55:43, 2016.
-\newblock \url{https://doi.org/10}.1007/s00526-016-0975-x.
+\newblock \url{https://doi.org/10.1007/s00526-016-0975-x}.
 
 \bibitem[Joung and van Koert(2025)]{JoungVanKoert2025}
 C. Joung and O. van Koert.
 \newblock Computational symplectic topology and symmetric orbits in the restricted three-body problem.
 \newblock \emph{Nonlinearity}, 38(2):025015, 2025.
-\newblock \url{https://doi.org/10}.1088/1361-6544/ada7ba.
+\newblock \url{https://doi.org/10.1088/1361-6544/ada7ba}.
 
 \bibitem[Liu and Salom\~ao(2025)]{LiuSalomao2025}
 L. Liu and P.~A.~S. Salom\~ao.
@@ -356,6 +358,41 @@ U. Frauenfelder and O. van Koert.
 \newblock \emph{The Restricted Three-Body Problem and Holomorphic Curves}.
 \newblock Pathways in Mathematics. Birkh\"auser, Cham, 2018.
 \newblock \url{https://doi.org/10.1007/978-3-319-72278-8}.
+
+\bibitem[Moser(1970)]{Moser1970}
+J. Moser.
+\newblock Regularization of Kepler's problem and the averaging method on a manifold.
+\newblock \emph{Communications on Pure and Applied Mathematics}, 23(4):609--636, 1970.
+\newblock \url{https://doi.org/10.1002/cpa.3160230406}.
+
+\bibitem[Robbin and Salamon(1993)]{RobbinSalamon1993}
+J. Robbin and D. Salamon.
+\newblock The Maslov index for paths.
+\newblock \emph{Topology}, 32(4):827--844, 1993.
+\newblock \url{https://doi.org/10.1016/0040-9383(93)90052-W}.
+
+\bibitem[Hofer et~al.(2003)Hofer, Wysocki, and Zehnder]{HWZ2003}
+H. Hofer, K. Wysocki, and E. Zehnder.
+\newblock Finite energy foliations of tight three-spheres and Hamiltonian dynamics.
+\newblock \emph{Annals of Mathematics}, 157(1):125--255, 2003.
+\newblock \url{https://doi.org/10.4007/annals.2003.157.125}.
+
+\bibitem[Albers et~al.(2013)Albers, Fish, Frauenfelder, and van Koert]{AlbersEtAlKepler2013}
+P. Albers, J. W. Fish, U. Frauenfelder, and O. van Koert.
+\newblock The Conley--Zehnder indices of the rotating Kepler problem.
+\newblock \emph{Mathematical Proceedings of the Cambridge Philosophical Society}, 154(2):243--260, 2013.
+\newblock \url{https://doi.org/10.1017/S0305004112000515}.
+
+\bibitem[Moore(1966)]{Moore1966}
+R. E. Moore.
+\newblock \emph{Interval Analysis}.
+\newblock Prentice--Hall, Englewood Cliffs, NJ, 1966.
+
+\bibitem[Fousse et~al.(2007)Fousse, Hanrot, Lefèvre, Pélissier, and Zimmermann]{FousseEtAl2007}
+L. Fousse, G. Hanrot, V. Lefèvre, P. Pélissier, and P. Zimmermann.
+\newblock MPFR: A multiple-precision binary floating-point library with correct rounding.
+\newblock \emph{ACM Transactions on Mathematical Software}, 33(2):Article 13, 2007.
+\newblock \url{https://doi.org/10.1145/1236463.1236468}.
 
 \end{thebibliography}
 
