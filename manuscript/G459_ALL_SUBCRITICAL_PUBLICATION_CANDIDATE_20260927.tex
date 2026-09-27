@@ -64,10 +64,29 @@ We fix
 \[
 \gamma=\frac{459}{1000}.
 \]
-The exact mass labeling used by the regularized Hamiltonian is
+Define
 \[
-\mu_* = \frac{264377992475701}{441699674239000},\qquad
-1-\mu_* = \frac{177321681763299}{441699674239000}.
+D(\gamma)=1-2\gamma+\gamma^2+2\gamma^3-\gamma^4,
+\qquad
+m_s(\gamma)=\frac{\gamma^3(\gamma^2-3\gamma+3)}{D(\gamma)}.
+\]
+For $0<\gamma\le 1/2$, $m_s(\gamma)$ is the smaller-mass representative and is strictly increasing. At $\gamma_*=459/1000$,
+\[
+m_s(\gamma_*)=
+\frac{177321681763299}{441699674239000}
+=0.4014530508060817\ldots .
+\]
+The labeling used internally in the regularized Hamiltonian is the complementary one,
+\[
+\mu_* = 1-m_s(\gamma_*)
+=\frac{264377992475701}{441699674239000}
+=0.5985469491939183\ldots .
+\]
+Thus the apparently larger value $\mu_*>1/2$ is only a choice of primary labeling; after exchanging the primaries, the conventional representative is $m_s(\gamma_*)\le1/2$. The first critical Jacobi value is also rational in this parameterization:
+\[
+c_{L_1}(\gamma_*)=
+\frac{388389323017759836541758}{195098602222838720229121}
+=1.990733498818957869\ldots .
 \]
 We use the Jacobi convention $\Sigma_c=H^{-1}(-c)$ and define
 \[
@@ -84,8 +103,8 @@ Thus $\Delta>0$ is the subcritical side.
 \toprule
 Item & Exact convention/value & Publication role \\
 \midrule
-Auxiliary mass parameter & $\gamma=459/1000$ & Fixed throughout; no mass interval is claimed. \\
-Regularized mass labels & $\mu_*=264377992475701/441699674239000$ and $1-\mu_*=177321681763299/441699674239000$ & Exact rational reconstruction used by the parameter audit. \\
+Exact parameter coordinate & $\gamma=459/1000$ & Fixed throughout; no mass interval is claimed. \\
+Mass convention & $m_s(\gamma_*)=177321681763299/441699674239000\le1/2$, while $\mu_*=1-m_s(\gamma_*)$ is the complementary internal label & Makes the primary-exchange convention explicit and prevents interpreting $\gamma$ itself as the standard mass ratio. \\
 Energy convention & $\Sigma_c=H^{-1}(-c)$, $\Delta=c-c_{L_1}(\gamma)$ & $\Delta>0$ is the subcritical side. \\
 Deep/near split & $\Delta_0=3/50000$ & Strict-convexity propagation for $\Delta\ge\Delta_0$; rotation/return proof for $0<\Delta<\Delta_0$. \\
 Index convention & Lower-semicontinuous, disk-trivialized $\mu_{\mathrm{CZ}}$ for contractible orbits & Dynamical convexity means $\mu_{\mathrm{CZ}}^{\mathrm{disk}}\ge3$. \\
@@ -163,10 +182,47 @@ For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3
 \end{figure}
 
 
-\section{Hamiltonian, regularization, and conventions}
-We use standard collision-regularization ideas in the Hamiltonian setting; for the geometric regularization viewpoint see, for example, \citet{Moser1970} and the PCR3BP treatment in \citet{FrauenfelderVanKoert2018}. For index conventions and homotopy properties of the Maslov/Robbin--Salamon framework we use \citet{RobbinSalamon1993}. The sign convention $\Sigma_c=H^{-1}(-c)$ is fixed throughout. At the first critical point $L_1$, $H(L_1)=-c_{L_1}$, so $\Delta>0$ implies $-c<-c_{L_1}$.
+\section{Hamiltonian, exact mass coordinate, regularization, and index conventions}
+\subsection{Rotating-frame Hamiltonian}
+In the standard rotating complex coordinates $q=q_1+iq_2$ and $p=p_1+ip_2$, we use the planar circular restricted three-body Hamiltonian in the form
+\[
+H_{\mu}(p,q)
+=\frac12\lvert p+iq\rvert^2
+-\frac{\mu}{\lvert q-(1-\mu)\rvert}
+-\frac{1-\mu}{\lvert q+\mu\rvert}
+-\frac12\lvert q\rvert^2,
+\]
+with $0<\mu<1$. Exchanging the two primaries replaces $\mu$ by $1-\mu$, so a physical mass ratio may be represented by its smaller value in $(0,1/2]$ without changing the underlying problem up to relabeling.
 
-The two bounded components require focus-specific Levi--Civita charts in the near-critical argument. The final proof uses the corrected two-component semantics: the two charts have positive Hamiltonian time changes, and reduced linearized cocycles are compared after transporting the reduced frame/trivialization. Equality of Conley--Zehnder and Robbin--Salamon data follows from the transported reduced-cocycle conjugacy under positive time reparametrization, not from equality of the time parameters.
+\subsection{Why $\gamma$ is used instead of a decimal mass ratio}
+The exact coordinate $\gamma$ is introduced to keep the collinear critical data rational rather than solving numerically for the first critical point. With
+\[
+D(\gamma)=1-2\gamma+\gamma^2+2\gamma^3-\gamma^4,
+\qquad
+m_s(\gamma)=\frac{\gamma^3(\gamma^2-3\gamma+3)}{D(\gamma)},
+\]
+one has, for $0<\gamma\le1/2$,
+\[
+m_s'(\gamma)
+=
+\frac{\gamma^2(1-\gamma)^2
+\bigl(9-6\gamma+5\gamma^2+2\gamma^3-\gamma^4\bigr)}
+{D(\gamma)^2}>0.
+\]
+Hence $\gamma$ is a one-to-one exact rational coordinate for the smaller physical mass ratio, up to exchange of the primaries. At the parameter used here, $m_s(459/1000)=1-\mu_*$ as recorded above. In particular, $\gamma$ is not being used as a synonym for the conventional PCR3BP mass ratio $\mu$.
+
+\subsection{Energy and regularization conventions}
+We use the Jacobi convention
+\[
+\Sigma_c=H^{-1}(-c),
+\qquad
+\Delta=c-c_{L_1}(\gamma_*).
+\]
+Thus increasing $c$ moves downward in Hamiltonian energy, and $\Delta>0$ is the subcritical side. At the first critical point $L_1$, $H(L_1)=-c_{L_1}$.
+
+Collision regularization compactifies each bounded subcritical physical component. In the convention used here, its regularization double cover is diffeomorphic to $S^3$, and the physical quotient is diffeomorphic to $\mathbb{R}P^3$. The exact momentum shear used in Section~3 is compatible with the deck involution, so it descends to the quotient.
+
+The near-critical argument uses two focus-specific Levi--Civita charts, one for each bounded component. Their Hamiltonian time changes are positive. Reduced linearized cocycles are compared after transporting the contact-plane frame/trivialization through these changes. Consequently, the Conley--Zehnder and Robbin--Salamon data used below are invariant under the transported conjugacy; no equality of the two time parameters is assumed. For the geometric regularization framework see \citet{Moser1970} and \citet{FrauenfelderVanKoert2018}; for the index formalism see \citet{RobbinSalamon1993}.
 
 \section{Fixed-energy convexity anchor and deep-energy propagation}
 \subsection{Exact global symplectic shear}
@@ -186,7 +242,7 @@ After the shear the Hamiltonian remains in the magnetic-mechanical class
 \[
 H(y,x)=\frac12\lvert y+F(x)\rvert^2+V(x).
 \]
-We use the generalized tangent-Hessian criterion of Liu and Salom\~ao (Theorem 9.1 in the current arXiv version) \citep{LiuSalomao2025}. Exact symbolic elimination of the fiber angle reduces the positivity problem to
+We use the generalized tangent-Hessian criterion of Liu and Salom\~ao (Theorem 9.1 in arXiv:2506.17867v2) \citep{LiuSalomao2025}. Exact symbolic elimination of the fiber angle reduces the positivity problem to
 \[
 L(s,t)=A_0(s,t)-\sqrt{R_1(s,t)}-\sqrt{R_2(s,t)}>0,
 \]
@@ -347,7 +403,7 @@ Proposition~\ref{prop:deep} covers $\Delta\ge3/50000$, while Proposition~\ref{pr
 
 The exact shear preserves disk-trivialized CZ under transported capping-disk trivializations. For the regularization double cover $S^3\to\RP^3$, a contractible capping disk lifts, and the pulled-back contact planes and linearized flows give the same disk-trivialized index upstairs and downstairs.
 
-The standard Birkhoff retrograde orbit on a subcritical regularized component has the $2$-unknot and rational self-linking $-1/2$ topology used in the literature; we use the discussion surrounding Theorem~1.5 of \citet{LiuSalomao2025}. Hryniewicz and Salom\~ao prove the rational-open-book/global-section implication for a $p$-unknotted orbit with self-linking $-1/p$ in a dynamically convex Reeb flow on a lens space of order $p$; in the cited version this is Corollary~1.8 \citep{HryniewiczSalomao2016}. Taking $p=2$ gives the final statement of Theorem~\ref{thm:main}.
+The standard Birkhoff retrograde orbit on a subcritical regularized component has the $2$-unknot and rational self-linking $-1/2$ topology used in the literature; we use the discussion and Theorem~1.5 of arXiv:2506.17867v2 \citep{LiuSalomao2025}. Hryniewicz and Salom\~ao prove the rational-open-book/global-section implication for a $p$-unknotted orbit with self-linking $-1/p$ in a dynamically convex Reeb flow on a lens space of order $p$; in arXiv:1505.02713v3 this is Corollary~1.8 \citep{HryniewiczSalomao2016}. Taking $p=2$ gives the final statement of Theorem~\ref{thm:main}.
 
 \section{Computer-assisted proof architecture and reproducibility}
 The computational part is organized so that search is separated from theorem acceptance. Adaptive subdivision, numerical scouting, and exploratory floating-point integrations may suggest a finite cover or a useful decomposition, but none of these objects is accepted as proof by itself. A theorem-critical claim is accepted only after it has been converted into a finite proof object whose obligations are checked with exact arithmetic or validated interval arithmetic.
@@ -380,7 +436,7 @@ Final assembly & Dependency map connecting the deep and near-critical propositio
 \endgroup
 
 \section{Relation to previous work and scope}
-Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the relevant all-subcritical statement appears as Theorem~1.16 in the cited arXiv version \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that G459 lies outside their theorem.
+Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the relevant all-subcritical statement appears as Theorem~1.16 in arXiv:2506.17867v2 \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that G459 lies outside their theorem.
 
 This paper proves a fixed-parameter all-subcritical theorem at $\gamma=459/1000$. It does not prove an interval of mass ratios, optimality of the shear, uniqueness or nondegeneracy of all periodic orbits, or that every retrograde-looking numerical orbit is a valid rational-open-book binding. Historical VAST runs, broad orbit searches, failed global beta thresholds and exploratory floating scouts are provenance, not premises of the final proof.
 
@@ -411,7 +467,7 @@ H. Hofer, K. Wysocki, and E. Zehnder.
 \bibitem[Hryniewicz and Salom\~ao(2016)]{HryniewiczSalomao2016}
 U.~L. Hryniewicz and P.~A.~S. Salom\~ao.
 \newblock Elliptic bindings for dynamically convex Reeb flows on the real projective three-space.
-\newblock \emph{Calculus of Variations and Partial Differential Equations}, 55:43, 2016.
+\newblock \emph{Calculus of Variations and Partial Differential Equations}, 55(2):Article 43, 2016.
 \newblock \url{https://doi.org/10.1007/s00526-016-0975-x}.
 
 \bibitem[Joung and van Koert(2025)]{JoungVanKoert2025}
@@ -429,7 +485,7 @@ L. Liu and P.~A.~S. Salom\~ao.
 \bibitem[Albers et~al.(2012a)Albers, Frauenfelder, van Koert, and Paternain]{AlbersEtAlContact2012}
 P. Albers, U. Frauenfelder, O. van Koert, and G. P. Paternain.
 \newblock The contact geometry of the restricted 3-body problem.
-\newblock \emph{Communications on Pure and Applied Mathematics}, 65(2), 2012.
+\newblock \emph{Communications on Pure and Applied Mathematics}, 65(2):229--263, 2012.
 \newblock \url{https://doi.org/10.1002/cpa.21380}.
 
 \bibitem[Albers et~al.(2012b)Albers, Fish, Frauenfelder, Hofer, and van Koert]{AlbersEtAlGSS2012}
