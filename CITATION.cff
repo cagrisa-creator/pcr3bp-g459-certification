@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this repository, software, or proof package, please cite the work described here."
+title: "PCR3BP certification at gamma = 459/1000"
+type: software
+version: 1.0.0
+authors:
+  - family-names: "Grisa Segundo"
+    given-names: "Cesar"
+    email: "cagrisa@id.uff.br"
+repository-code: "https://github.com/cagrisa-creator/pcr3bp-g459-certification"
+url: "https://github.com/cagrisa-creator/pcr3bp-g459-certification"
+keywords:
+  - "planar circular restricted three-body problem"
+  - "Birkhoff conjecture"
+  - "global surfaces of section"
+  - "dynamical convexity"
+  - "Conley-Zehnder index"
+  - "computer-assisted proof"
+preferred-citation:
+  type: article
+  title: "A computer-assisted all-subcritical Birkhoff global-section theorem at gamma = 459/1000 for the planar circular restricted three-body problem"
+  authors:
+    - family-names: "Grisa Segundo"
+      given-names: "Cesar"
+  year: 2026
