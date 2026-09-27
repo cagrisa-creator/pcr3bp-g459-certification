@@ -1,0 +1,363 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{booktabs}
+\usepackage{array,tabularx,longtable}
+\usepackage{enumitem}
+\usepackage[authoryear,round]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\newcommand{\CZ}{\mu_{\mathrm{CZ}}}
+\newcommand{\RP}{\mathbb{R}P}
+\newcommand{\R}{\mathbb{R}}
+
+\title{A computer-assisted all-subcritical Birkhoff global-section theorem at $\gamma=459/1000$\\for the planar circular restricted three-body problem}
+\author{Cesar Grisa Segundo\\\small Independent researcher, Brazil\\\small \texttt{cagrisa@id.uff.br}}
+\date{}
+
+% Publication editorial candidate; theorem mathematics unchanged from the audited Gate-9 source.
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove a computer-assisted Birkhoff global-section theorem for the planar circular restricted three-body problem at the exact parameter $\gamma=459/1000$, uniformly over all energies below the first critical level. After regularization, the proof is divided into two complementary energy regimes. Away from the critical level, an explicit exact symplectic momentum shear reduces dynamical convexity to strict convexity of the regularized double cover; the resulting positivity problem is certified by exact symbolic reduction, validated interval arithmetic, and an independent MPFR replay. In a thin neighborhood of the first critical value, where this global convexity mechanism is no longer uniform, we prove the required Conley--Zehnder lower bound directly from validated rotation estimates, short-period exclusion, finite return geometry, and a first-hit argument controlling the only region where the pointwise rotation estimate degenerates. Combining the two regimes shows that every contractible periodic orbit has disk-trivialized lower-semicontinuous Conley--Zehnder index at least three. Consequently, in each bounded regularized component, the standard retrograde orbit binds a rational open book whose disk-like pages are global surfaces of section. All theorem-critical computations are encoded by finite certificates and checked independently.
+\end{abstract}
+
+\noindent\textbf{Keywords:} restricted three-body problem; global surface of section; dynamical convexity; Conley--Zehnder index; computer-assisted proof; interval arithmetic.
+
+\section{Introduction}
+The planar circular restricted three-body problem (PCR3BP) is one of the classical testing grounds for the interaction between celestial mechanics, Hamiltonian dynamics, and modern symplectic geometry. In rotating coordinates it is a two-degree-of-freedom Hamiltonian system, but its regularized energy levels already display a rich mixture of periodic motion, bifurcation, transport, and collision geometry. A central idea going back to Birkhoff is that part of this complexity can be organized by a global surface of section: a two-dimensional surface whose interior is transverse to the flow and which is met repeatedly by every orbit in the relevant component. Such a section replaces a continuous three-dimensional flow by an area-preserving return map and therefore provides a natural framework for studying periodic orbits and global dynamics; see \citet{Birkhoff1915}.
+
+Modern proofs of global sections in the PCR3BP pass through contact and symplectic geometry. Below the first critical value, collision regularization converts each bounded physical component into a compact contact-type energy hypersurface; see \citet{AlbersEtAlContact2012} and the systematic account in \citet{FrauenfelderVanKoert2018}. Global sections in important PCR3BP regimes were established by holomorphic-curve methods in \citet{AlbersEtAlGSS2012}. A particularly effective route is dynamical convexity: in the convention used here, every contractible periodic Reeb orbit must have lower-semicontinuous disk-trivialized Conley--Zehnder index at least three. Strict convexity of an $S^3$-type energy hypersurface in $\mathbb{R}^4$ implies this index bound through the work of Hofer, Wysocki and Zehnder \citep{HWZ1998}; for the rational-open-book conclusion on $\mathbb{R}P^3$, we use \citet{HryniewiczSalomao2016}.
+
+Validated computation has become increasingly useful when the relevant convexity or index inequalities are explicit but not accessible by hand over the entire parameter domain. In the PCR3BP, \citet{JoungVanKoert2025} developed computational symplectic methods for symmetric periodic orbits and Conley--Zehnder indices. More recently, \citet{LiuSalomao2025} proved finite-energy-foliation results and, in particular, an all-subcritical Birkhoff conclusion for mass ratios sufficiently close to the equal-mass case. The neighborhood in that theorem is existential for the comparison needed here. The present paper therefore makes a different fixed-parameter statement: it treats the exact auxiliary parameter
+\[
+\gamma=\frac{459}{1000},
+\]
+and proves the Birkhoff global-section conclusion for every subcritical energy at that parameter. No interval of mass ratios is claimed.
+
+The main technical point is that one geometric mechanism does not remain uniformly effective all the way to the first critical level. We therefore divide the proof at the exact threshold
+\[
+\Delta_0=\frac{3}{50000},
+\qquad
+\Delta=c-c_{L_1}(\gamma)>0.
+\]
+For $\Delta\ge\Delta_0$, an explicit exact symplectic momentum shear converts the regularized double cover into a strictly convex hypersurface. Exact elimination reduces the tangent-Hessian condition to a finite positivity problem in two base variables, which is certified with validated arithmetic and independently replayed. For $0<\Delta<\Delta_0$, strict Euclidean convexity is replaced by a direct rotation-index argument. The near-critical proof combines a pointwise rotation inequality, a short-period exclusion, a finite return graph, a long-orbit occupation contradiction, and a first-hit decomposition of the only block where the baseline pointwise rotation estimate is not uniform.
+
+The proof is computer-assisted but finite in the strong sense needed for auditing. Search and adaptive subdivision are used only to generate finite proof objects. The theorem-critical claims are then accepted by exact arithmetic, validated interval inequalities, complete finite coverage, and independent fail-closed replay/checkers. The purpose of the computational layer is therefore not to sample trajectories, but to certify a finite list of mathematical inequalities and covering obligations from which the theorem follows.
+
+The rest of the paper is organized as follows. Section~2 fixes the Hamiltonian, parameter, regularization, time-change, and index conventions. Section~3 proves the deep subcritical branch by strict convexity after an exact shear. Section~4 develops the near-critical rotation and return estimates, while Section~5 closes the exceptional first-hit block. Section~6 assembles the two regimes into dynamical convexity and the global-section conclusion. Section~7 explains the computer-assisted proof architecture and reproducibility, and Section~8 records the relation to previous work and the precise scope of the theorem.
+
+\subsection{Exact parameter and main theorem}
+We fix
+\[
+\gamma=\frac{459}{1000}.
+\]
+The exact mass labeling used by the regularized Hamiltonian is
+\[
+\mu_* = \frac{264377992475701}{441699674239000},\qquad
+1-\mu_* = \frac{177321681763299}{441699674239000}.
+\]
+We use the Jacobi convention $\Sigma_c=H^{-1}(-c)$ and define
+\[
+\Delta = c-c_{L_1}(\gamma).
+\]
+Thus $\Delta>0$ is the subcritical side.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Exact parameter and convention data used throughout the proof.}
+\label{tab:parameter-conventions}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth} X >{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\toprule
+Item & Exact convention/value & Publication role \\
+\midrule
+Auxiliary mass parameter & $\gamma=459/1000$ & Fixed throughout; no mass interval is claimed. \\
+Regularized mass labels & $\mu_*=264377992475701/441699674239000$ and $1-\mu_*=177321681763299/441699674239000$ & Exact rational reconstruction used by the parameter audit. \\
+Energy convention & $\Sigma_c=H^{-1}(-c)$, $\Delta=c-c_{L_1}(\gamma)$ & $\Delta>0$ is the subcritical side. \\
+Deep/near split & $\Delta_0=3/50000$ & Strict-convexity propagation for $\Delta\ge\Delta_0$; rotation/return proof for $0<\Delta<\Delta_0$. \\
+Index convention & Lower-semicontinuous, disk-trivialized $\mu_{\mathrm{CZ}}$ for contractible orbits & Dynamical convexity means $\mu_{\mathrm{CZ}}^{\mathrm{disk}}\ge3$. \\
+LC/time semantics & Two focus-specific Levi--Civita charts with positive time factors; reduced frame/trivialization transported with the cocycle & No global equal-clock identification is used. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{theorem}[Fixed-G459 all-subcritical dynamical convexity and global sections]\label{thm:main}
+Fix $\gamma=459/1000$. For every subcritical level $\Delta>0$, each bounded regularized physical component has dynamically convex Reeb flow: every contractible periodic orbit has disk-trivialized lower-semicontinuous Conley--Zehnder index at least three. Consequently, in each bounded component, a Birkhoff retrograde periodic orbit in the standard topological/shooting class binds a rational open book whose pages are disk-like global surfaces of section.
+\end{theorem}
+
+The topological quantifier in the second sentence is deliberate. We use a standard Birkhoff retrograde orbit with the $2$-unknot and rational self-linking $-1/2$ properties appearing in the PCR3BP literature. We do not claim that every orbit informally described as retrograde automatically satisfies these knot-theoretic hypotheses.
+
+\subsection{Proof architecture}
+The proof splits the subcritical ray at the exact rational threshold
+\[
+\Delta_0=\frac{3}{50000}.
+\]
+For $\Delta\ge\Delta_0$, we prove strict convexity of a sheared regularized $S^3$ lift. For $0<\Delta<\Delta_0$, we prove the Conley--Zehnder lower bound directly from validated rotation and return geometry. The near-critical certificates may use the critical face $\Delta=0$ as a boundary of an interval enclosure; the theorem itself concerns $\Delta>0$.
+
+\section{Hamiltonian, regularization, and conventions}
+The sign convention $\Sigma_c=H^{-1}(-c)$ is fixed throughout. At the first critical point $L_1$, $H(L_1)=-c_{L_1}$, so $\Delta>0$ implies $-c<-c_{L_1}$.
+
+The two bounded components require focus-specific Levi--Civita charts in the near-critical argument. The final proof uses the corrected two-component semantics: the two charts have positive Hamiltonian time changes, and reduced linearized cocycles are compared after transporting the reduced frame/trivialization. Equality of Conley--Zehnder and Robbin--Salamon data follows from the transported reduced-cocycle conjugacy under positive time reparametrization, not from equality of the time parameters.
+
+\section{Fixed-energy convexity anchor and deep-energy propagation}
+\subsection{Exact global symplectic shear}
+At the reference G459 level, the regularized Hamiltonian admits the exact global momentum shear generated in physical coordinates by
+\[
+G(q)=-\frac{53}{250}q_1q_2.
+\]
+In elliptic-hyperbolic regularizing coordinates this is equivalent to
+\[
+g(x)=\sinh(2x_1)\sin(2x_2)=16q_1q_2,
+\qquad \lambda=-\frac{53}{4000}.
+\]
+Because the momentum translation is by an exact one-form, it is an exact symplectomorphism, and the generator is compatible with the deck involution.
+
+\subsection{Exact tangent-Hessian reduction}
+After the shear the Hamiltonian remains in the magnetic-mechanical class
+\[
+H(y,x)=\frac12\lvert y+F(x)\rvert^2+V(x).
+\]
+We use the generalized tangent-Hessian criterion of Liu and Salom\~ao (Theorem 9.1 in the current arXiv version) \citep{LiuSalomao2025}. Exact symbolic elimination of the fiber angle reduces the positivity problem to
+\[
+L(s,t)=A_0(s,t)-\sqrt{R_1(s,t)}-\sqrt{R_2(s,t)}>0,
+\]
+where $s=\cosh x_1$, $t=\cos x_2$, and $A_0,R_1,R_2$ are exact rational bivariate polynomials.
+
+The fixed-energy certificate has $13{,}655$ final leaves: $11{,}902$ PASS, $1{,}753$ OUTSIDE, and no PENDING leaf. The smallest certified lower bound is
+\[
+8.331573711073198\times 10^{-9}>0.
+\]
+An independent replay regenerated the exact polynomial data, rebuilt GCC and Clang computations, reconstructed the final ledger byte-for-byte, independently audited the tiling, and replayed all $13{,}655$ leaves with MPFR-192 directed rounding.
+
+\subsection{Rebased energy-ray propagation}
+The publication-critical base threshold is $\Delta_0=3/50000$. At this level the finite strict-convexity certificate closes, and exact energy-ray monotonicity propagates positivity for every $\Delta\ge\Delta_0$. The independent replay checks all $15{,}364$ global terminal leaves with MPFR-192 and zero failures, including the historical $4{,}207$ expected-PASS residual leaves. Therefore all levels $\Delta\ge3/50000$ are dynamically convex through strict convexity.
+
+\begin{proposition}[Deep subcritical regime]\label{prop:deep}
+For every $\Delta\ge3/50000$, each bounded regularized component is dynamically convex. More precisely, after the exact global momentum shear described above, the regularized $S^3$ lift is strictly convex, and hence every contractible periodic Reeb orbit has disk-trivialized Conley--Zehnder index at least three.
+\end{proposition}
+
+\section{Near-critical rotation and finite return geometry}
+We now restrict to $0<\Delta<3/50000$.
+
+\subsection{Segmentwise rotation estimate}
+In the final transported reduced contact frame, the project constructs a pointwise quantity $\beta(w)$ satisfying
+\[
+\Theta(b)-\Theta(a)\ge \int_a^b \beta(w(t))\,dt.
+\]
+The rotation-index convention used here gives
+\[
+\Theta(T)>2\pi \quad\Longrightarrow\quad \CZ^{\mathrm{disk}}\ge3.
+\]
+On the canonical near-critical beta-chart partition, the finite certificate closes all $32{,}661$ parent obligations for the target $\beta\ge1/100$ on its intended domain.
+
+The same framework uses stronger regions where $\beta\ge2/5$ and $\beta\ge7/200$. Let $t_{40}$ and $t_{35}$ denote the certified occupation times in those two stronger regions, and let $t_R$ be the remaining time to which the baseline bound $\beta\ge1/100$ applies. Thus
+\[
+T=t_{40}+t_{35}+t_R.
+\]
+The exact occupation identity used by the exact-arithmetic checker is
+\begin{align*}
+\frac25 t_{40}+\frac7{200}t_{35}+\frac1{100}t_R
+&=\frac1{100}T+\frac{39}{100}t_{40}+\frac1{40}t_{35}.
+\end{align*}
+Consequently the segmentwise estimate gives
+\[
+\Theta(T)\ge \frac1{100}T+\frac{39}{100}t_{40}+\frac1{40}t_{35}.
+\]
+If a contractible periodic orbit had $\CZ^{\mathrm{disk}}\le2$, the rotation-index implication forces $\Theta(T)\le2\pi$. Multiplication by $200$ therefore gives the exact low-index occupation budget
+\[
+2T+78t_{40}+5t_{35}\le400\pi.
+\]
+The convention audit also checks the Robbin--Salamon/Conley--Zehnder comparison and the complementary contribution used in the underlying N2 bridge; no untransported LC frame or equal-clock shortcut enters this inequality.
+
+\subsection{Current-neck short-period exclusion}
+The current-neck residual is controlled by validated Yorke/Wirtinger-type period estimates, exact energy support, and displacement inequalities. The final theorem is
+\[
+T_{\widehat H}>3
+\]
+for every nonconstant periodic orbit represented by the canonical current-neck residual. The independent replay reconstructs exactly the canonical $1{,}222$ boxes: $1{,}212$ close by the unweighted Yorke test, nine of the ten residual boxes close by the fixed-diagonal weighted Yorke test, and the single remaining index closes by the independent scalar-displacement certificate. Thus the accounting is $1{,}222/1{,}222$, with no missing or extra canonical key.
+
+\subsection{Finite return graph and long regime}
+The residual return geometry is encoded by a finite $\theta$-ordered graph. The independent N4 backend validates all $30/30$ theorem-critical half-phase transitions. Its conservative collapsed hard graph has $34$ hard edges, no self edge, no $\theta$-order violation, is acyclic, and has maximum hard-edge path length $5$. This is the property used downstream: a completed residual cluster contains at most seven residual visits.
+
+The corresponding independent replay then checks the validated propagation obligations that make the counting argument quantitative: $2{,}392/2{,}392$ strong-window obligations, $2{,}362/2{,}362$ outer safe half-obligations, $10/10$ hard-sink half-obligations, and $2{,}372/2{,}372$ detachment half-obligations pass. The exact residence estimate is
+\[
+T_{\mathrm{res}}<\frac{145\pi}{106496}<\frac1{230},
+\]
+while the occupation argument gives $t_R\ge219/100$. Hence a hypothetical long low-index orbit must make at least $504$ residual visits. Since N4 allows at most seven visits per completed cluster, at least $72$ clusters are required. The exact cluster arithmetic contradicts the available long-regime occupation budget. This closes the hypothetical low-index regime $T>400\pi/7$ without enumerating periodic orbits.
+
+\section{The complementary seed-7 block}
+The last local obstruction arises from an exact $16$-cell seed cover. Fourteen cells satisfy the pointwise theorem $\beta\ge1/100$. Two cells, denoted $s04\_d0$ and $s06\_d0$, do not. They are never relabeled as pointwise $\beta\ge1/100$ cells; instead, their union is controlled by an integrated first-hit argument.
+
+\subsection{One-way bad block and corridor}
+Let $B=s04\_d0\cup s06\_d0$. On $B$, and on a larger surrounding corridor, validated inequalities give
+\[
+\dot\theta<0,\qquad \dot A<0,
+\]
+and the two $\phi$ faces point strictly outward. Hence local recirculation is impossible.
+
+\subsection{Theta-entry geometry}
+On the complete theta-entry shell, $\dot A<0$. All possible negative $\beta$ is confined to a narrow exact sublayer $N$, where
+\[
+\beta\ge-\frac{3}{200}
+\]
+and $\dot A$ is sufficiently negative to give
+\[
+\beta-\frac{3}{20}\dot A>0.
+\]
+Inside $B$ itself, $\beta\ge0$ on both exceptional cells.
+
+\subsection{Upper-theta entry family}
+The complete upper-theta entry face has the exact natural partition
+\[
+32\times32\times3=3072
+\]
+roots. The finite genealogy closes all roots and yields
+\[
+J_{001}>0.005708670873993645.
+\]
+The generic following-$B$ deficit is smaller than $0.0049211744370937422$, hence the paired upper-theta margin is
+\[
+>0.0007874964368999028>0.
+\]
+
+\subsection{Upper-A entry family}
+On the high-$A$ corridor, $\beta\ge1/20$, and every upper-$A$-reaching first-hit block spends more than $1/40$ of the relevant time there. Relative to the $\beta=1/100$ target this yields
+\[
+J_{001}(\mathrm{entry})>\left(\frac1{25}\right)\left(\frac1{40}\right)=\frac1{1000}.
+\]
+The following $B$ residence satisfies $T_{B,\mathrm{upperA}}<17/200$, so the deficit relative to $1/100$ is $<17/20000$. Therefore
+\[
+\frac1{1000}-\frac{17}{20000}=\frac3{20000}>0.
+\]
+
+\begin{lemma}[First-hit decomposition of $B$]\label{lem:first-hit}
+Decompose an orbit into maximal connected residence intervals in $B$. Every forward entry into $B$ occurs through exactly one of two families: the upper-theta face or the upper-$A$ face. Pair each maximal residence with its immediately preceding first-hit entry block. These pairs are disjoint in time and no entry block is reused.
+\end{lemma}
+
+\begin{proof}
+The outward $\phi$-face signs exclude forward $\phi$ entry. The strict $\theta$ and $A$ monotonicities leave only the upper-theta and upper-$A$ faces as forward entry faces. Maximal connected residences are pairwise disjoint by definition. The immediately preceding first-hit block terminates at the corresponding entry event and cannot simultaneously precede a distinct maximal residence.
+\end{proof}
+
+\begin{corollary}
+Each entry-plus-$B$ pair satisfies the effective $\beta=1/100$ rotation budget. Hence the two exceptional seed cells are discharged by integrated rotation, and the exact seed-7 cover is closed $16/16$.
+\end{corollary}
+
+\begin{proposition}[Near-critical regime]\label{prop:near}
+For every $0<\Delta<3/50000$, each bounded regularized component is dynamically convex. In particular, the segmentwise rotation estimate, short-period exclusion, finite return graph, long-orbit occupation contradiction, and first-hit control of the exceptional block exclude every contractible periodic orbit with disk-trivialized Conley--Zehnder index at most two.
+\end{proposition}
+
+\section{Proof of the main theorem}\label{sec:assembly}
+Proposition~\ref{prop:deep} covers $\Delta\ge3/50000$, while Proposition~\ref{prop:near} covers $0<\Delta<3/50000$. These intervals form the complete subcritical ray $\Delta>0$. In the deep branch, strict convexity gives dynamical convexity by \citep{HWZ1998}. In the near-critical branch, assume a contractible periodic orbit had disk-trivialized $\CZ\le2$. The corrected two-component semantics, segmentwise rotation inequality, current-neck exclusion, finite return graph, long-regime contradiction and complete seed-7 discharge reduce every possible itinerary to one of the validated closed cases, contradicting the low-index assumption. Thus every contractible orbit has $\CZ^{\mathrm{disk}}\ge3$.
+
+The exact shear preserves disk-trivialized CZ under transported capping-disk trivializations. For the regularization double cover $S^3\to\RP^3$, a contractible capping disk lifts, and the pulled-back contact planes and linearized flows give the same disk-trivialized index upstairs and downstairs.
+
+The standard Birkhoff retrograde orbit on a subcritical regularized component has the $2$-unknot and rational self-linking $-1/2$ topology used in the literature; we use the discussion surrounding Theorem~1.5 of \citet{LiuSalomao2025}. Hryniewicz and Salom\~ao prove the rational-open-book/global-section implication for a $p$-unknotted orbit with self-linking $-1/p$ in a dynamically convex Reeb flow on a lens space of order $p$; in the cited version this is Corollary~1.8 \citep{HryniewiczSalomao2016}. Taking $p=2$ gives the final statement of Theorem~\ref{thm:main}.
+
+\section{Computer-assisted proof architecture and trust base}
+The proof distinguishes search/generation from theorem acceptance. Adaptive generators, numerical scouts, plots, and ordinary floating-point integrations are not theorem authorities. Theorem-critical computational claims are accepted only through exact arithmetic, validated interval arithmetic, finite proof objects and fail-closed checkers.
+
+For reproducibility, we use the following independence scale: I0, same-program rerun; I1, clean-environment or cross-compiler replay; I2, independent replay/checker of the same finite certificate; I3, independently derived checker or alternate arithmetic implementation; I4, independent researcher/team reproduction; I5, independent reconstruction from the paper specification. Every theorem-critical finite certificate family used in the proof meets at least I2. I3 is claimed only where the implementation independence actually justifies it.
+
+Table~\ref{tab:proof-evidence} gives the publication-facing traceability map. The release manifest records the full SHA-256 values for every frozen package, while the internal Claim--Evidence Matrix retains the finer claim-by-claim genealogy.
+
+\begingroup\footnotesize\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.11\textwidth}>{\raggedright\arraybackslash}p{0.48\textwidth}>{\raggedright\arraybackslash}p{0.15\textwidth}@{}}
+\caption{Compact proof-to-evidence map for theorem-critical nodes.}\label{tab:proof-evidence}\\
+\toprule
+Manuscript role & Nodes & Archived evidence & Acceptance \\
+\midrule
+\endfirsthead
+\toprule
+Manuscript role & Nodes & Archived evidence & Acceptance \\
+\midrule
+\endhead
+Parameter/fixed anchor & F0--F2 & \nolinkurl{R16_FIXED_TRUST_BASE_I2_EVIDENCE_20260926.zip} and external-theorem/convention audit & exact/I2 + theory audit \\
+Deep-energy propagation & D1 & \nolinkurl{R16_D1_I2_GLOBAL_MPFR_REPLAY_20260925.zip} & $15{,}364/15{,}364$ \\
+LC semantics and rotation budget & N0--N2 & N0 semantic audit; N1 final I2 package; N2 theory/exact-arithmetic closure & I2 where finite + theory audit \\
+Short/return/long regime & N3--N5 & authoritative N3, N4 and N5 I2 evidence packages & complete I2 replay \\
+Complementary block & C0--C4 & \nolinkurl{R16_COMPLEMENTARY_TRUST_BASE_I2_EVIDENCE_20260926.zip} & complete I2 audit \\
+Entry and pairing & U1--U2, A0--A2, E0--E1 & \nolinkurl{R16_FINAL_ENTRY_ASSEMBLY_I2_EVIDENCE_20260926.zip} & complete assembly audit \\
+Seed-7 discharge & S2 & final-entry audit + complementary trust-base audit & $14+2=16/16$ \\
+Final theorem & T0 & dependency map, Claim--Evidence Matrix, trust-base map, nine-gate report & complete dependency audit \\
+\bottomrule
+\end{longtable}
+
+\section{Relation to previous work and scope}
+Joung and van Koert developed validated computational methods for symmetric periodic orbits and Conley--Zehnder indices in the PCR3BP \citep{JoungVanKoert2025}. Liu and Salom\~ao prove, among other results, Birkhoff's retrograde-orbit conclusion for mass ratios sufficiently close to $1/2$ and all subcritical energies; the frozen source audit identifies the relevant all-subcritical result as Theorem~1.16 in the cited arXiv version \citep{LiuSalomao2025}. The neighborhood in that result is existential for the comparison made here. We therefore do not claim that G459 lies outside their theorem.
+
+This paper proves a fixed-mass all-subcritical theorem at $\gamma=459/1000$. It does not prove an interval of mass ratios, optimality of the shear, uniqueness or nondegeneracy of all periodic orbits, or that every retrograde-looking numerical orbit is a valid rational-open-book binding. Historical VAST runs, broad orbit searches, failed global beta thresholds and exploratory floating scouts are provenance, not premises of the final proof.
+
+\section{Reproducibility and availability}
+The final release will contain the frozen dependency map, Claim--Evidence Matrix, trust-base map, exact parameter/environment manifests, theorem-critical proof objects, independent checkers, a quick-audit route, a complete replay route and SHA-256 manifests. Persistent repository and DOI identifiers will be inserted only after the release assets are frozen.
+
+\section*{Statements and Declarations}
+\paragraph{Funding.} No funding was received for conducting this study.
+\paragraph{Competing interests.} The author declares no competing interests.
+\paragraph{Author contributions.} The author conceived the study, developed the mathematical and computational methodology, implemented the software, performed the formal analysis and validated computations, curated the proof objects and research data, and wrote and revised the manuscript.
+\paragraph{Data availability.} The theorem-critical finite certificates, manifests and audit objects will be deposited in the final public reproducibility release. [Persistent identifier to be inserted after deposit.]
+\paragraph{Code availability.} The proof-critical source, replay scripts and independent checkers will be released with the frozen reproducibility package. [Persistent identifier to be inserted after deposit.]
+\paragraph{Use of AI-assisted tools.} An AI language model was used during the research and publication workflow for organization, drafting support, code assistance, source comparison and audit support. AI output was not treated as theorem evidence. The theorem-critical computer-assisted claims are accepted only through deterministic exact/interval certificates, finite proof objects and independent replay/checkers. Scientific judgments, verification of the final mathematical claims and responsibility for the submitted text remain with the human author(s). The AI system is not an author.
+
+\begin{thebibliography}{99}
+
+\bibitem[Birkhoff(1915)]{Birkhoff1915}
+G.~D. Birkhoff.
+\newblock The restricted problem of three bodies.
+\newblock \emph{Rendiconti del Circolo Matematico di Palermo}, 39:265--334, 1915.
+\newblock \url{https://doi.org/10}.1007/BF03015982.
+
+\bibitem[Hofer et~al.(1998)Hofer, Wysocki, and Zehnder]{HWZ1998}
+H. Hofer, K. Wysocki, and E. Zehnder.
+\newblock The dynamics on three-dimensional strictly convex energy surfaces.
+\newblock \emph{Annals of Mathematics}, 148(1):197--289, 1998.
+\newblock \url{https://doi.org/10}.2307/120994.
+
+\bibitem[Hryniewicz and Salom\~ao(2016)]{HryniewiczSalomao2016}
+U.~L. Hryniewicz and P.~A.~S. Salom\~ao.
+\newblock Elliptic bindings for dynamically convex Reeb flows on the real projective three-space.
+\newblock \emph{Calculus of Variations and Partial Differential Equations}, 55:43, 2016.
+\newblock \url{https://doi.org/10}.1007/s00526-016-0975-x.
+
+\bibitem[Joung and van Koert(2025)]{JoungVanKoert2025}
+C. Joung and O. van Koert.
+\newblock Computational symplectic topology and symmetric orbits in the restricted three-body problem.
+\newblock \emph{Nonlinearity}, 38(2):025015, 2025.
+\newblock \url{https://doi.org/10}.1088/1361-6544/ada7ba.
+
+\bibitem[Liu and Salom\~ao(2025)]{LiuSalomao2025}
+L. Liu and P.~A.~S. Salom\~ao.
+\newblock Finite energy foliations and global dynamics in the restricted three-body problem.
+\newblock arXiv:2506.17867v2, 2026 preprint version.
+
+
+\bibitem[Albers et~al.(2012a)Albers, Frauenfelder, van Koert, and Paternain]{AlbersEtAlContact2012}
+P. Albers, U. Frauenfelder, O. van Koert, and G. P. Paternain.
+\newblock The contact geometry of the restricted 3-body problem.
+\newblock \emph{Communications on Pure and Applied Mathematics}, 65(2), 2012.
+\newblock \url{https://doi.org/10.1002/cpa.21380}.
+
+\bibitem[Albers et~al.(2012b)Albers, Fish, Frauenfelder, Hofer, and van Koert]{AlbersEtAlGSS2012}
+P. Albers, J. W. Fish, U. Frauenfelder, H. Hofer, and O. van Koert.
+\newblock Global surfaces of section in the planar restricted 3-body problem.
+\newblock \emph{Archive for Rational Mechanics and Analysis}, 204(1):273--284, 2012.
+\newblock \url{https://doi.org/10.1007/s00205-011-0475-2}.
+
+\bibitem[Frauenfelder and van Koert(2018)]{FrauenfelderVanKoert2018}
+U. Frauenfelder and O. van Koert.
+\newblock \emph{The Restricted Three-Body Problem and Holomorphic Curves}.
+\newblock Pathways in Mathematics. Birkh\"auser, Cham, 2018.
+\newblock \url{https://doi.org/10.1007/978-3-319-72278-8}.
+
+\end{thebibliography}
+
+\end{document}
